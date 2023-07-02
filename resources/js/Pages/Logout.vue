@@ -1,12 +1,16 @@
 <template>
-    <h1>Users</h1>
-
-    <Nav />
+    <Layout>
+        <h1 class="text-4xl font-bold">
+            Loutout
+        </h1>
+    </Layout>
 </template>
 
 <script>
-import Nav from '../Shared/Nav';
+import Layout from "../Shared/Layout";
+
 export default {
-    components: { Nav },
+    components: { Layout },
+    props: { time: String }
 };
 </script>
