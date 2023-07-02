@@ -2,36 +2,31 @@
     <nav class="mt-6">
         <ul class="list-disc">
             <li>
-                <Link href="/" class="text-blue-500 hover:underline"
-                    :class="{ 'font-bold underline': $page.component === 'Home' }">
-                Home
-                </Link>
+                <NavLink href="/" :active="$page.component === 'Home'">
+                    Home
+                </NavLink>
             </li>
+
             <li>
-                <Link href="/users?foo=bar" class="text-blue-500 hover:underline"
-                    :class="{ 'font-bold underline': $page.component === 'Users' }">
-                Users
-                </Link>
+                <NavLink href="/users" :active="$page.component === 'Users'">
+                    Users
+                </NavLink>
             </li>
+
             <li>
-                <Link href="/settings" class="text-blue-500 hover:underline"
-                    :class="{ 'font-bold underline': $page.component === 'Settings' }">Settings</Link>
-            </li>
-            <li>
-                <Link href="/logout" method="POST" as="button" :data="{ foo: 'bar' }" class="text-blue-500 hover:underline"
-                    :class="{ 'font-bold underline': $page.component === 'Logout' }">
-                Logout
-                </Link>
+                <NavLink href="/settings" :active="$page.component === 'Settings'">
+                    Settings
+                </NavLink>
             </li>
         </ul>
     </nav>
 </template>
 
 <script>
-import { Link } from '@inertiajs/vue3';
+import NavLink from "./NavLink";
 
 export default {
-    components: { Link },
+    components: { NavLink },
 };
 </script>
 
