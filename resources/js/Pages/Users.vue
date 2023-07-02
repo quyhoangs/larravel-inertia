@@ -7,17 +7,13 @@
         <p>The current time is {{ time }}.</p>
 
         <Link href="/users" class="text-blue-500" preserve-scroll>
-            Refresh
+        Refresh
         </Link>
     </div>
 </template>
 
 <script>
-import Layout from "../Shared/Layout";
-import { Link } from '@inertiajs/vue3';
-
 export default {
-    layout: Layout,
     props: { time: String }
 };
 </script>
