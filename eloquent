@@ -1,0 +1,58 @@
+Group
+    public function billsWithGroupPlan()
+    {
+        return $this->hasMany(Bill::class, 'group_plan_id', 'group_plan_id')
+                    ->with('GroupPlan');
+    }
+
+Bill
+public function getBillInformation()
+{
+    $isOneType = $this->isOneType();
+
+    $start_date = $isOneType ? $this->groupPlan->start_date : $this->created_at;
+    $point_purchase = $isOneType ? $this->point_amount : '-';
+    $amount_purchase = $isOneType ? $this->money_amount : '-';
+    $usage_points = $isOneType ? '-' : $this->point_amount;
+    $period_date = $isOneType ? $this->groupPlan->expired_at : '-';
+    $remaining_points = $this->point_remaining_amount;
+
+    return [
+
+        'start_date' => optional($start_date)->format('Y/m/d') ?? '',
+        'point_purchase' => $point_purchase,
+        'amount_purchase' => $amount_purchase,
+        'usage_points' => $usage_points,
+        'period_date' => optional($period_date)->format('Y/m/d'),
+        'remaining_points' => $remaining_points,
+    ];
+}
+
+//Controller
+        $billInfor = [];
+        foreach ($group->billsWithGroupPlan as $key => $bill) {
+            $billInfor[$key] = $bill->getBillInformation();
+        }
+
+//cách tường minh
+public function getBillInformation()
+{
+    $isOneType = $this->isOneType();
+
+    $billInformation = [
+        'point_purchase' => $isOneType ? $this->point_amount : '-',
+        'amount_purchase' => $isOneType ? $this->money_amount : '-',
+        'usage_points' => $isOneType ? '-' : $this->point_amount,
+        'remaining_points' => $this->point_remaining_amount,
+    ];
+
+    if ($isOneType) {
+        $billInformation['start_date'] = $this->getFormattedDate($this->groupPlan->start_date);
+        $billInformation['period_date'] = $this->getFormattedDate($this->groupPlan->expired_at);
+    } else {
+        $billInformation['start_date'] = $this->getFormattedDate($this->created_at);
+        $billInformation['period_date'] = '-';
+    }
+
+    return $billInformation;
+}
