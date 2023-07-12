@@ -42,7 +42,7 @@ public function __invoke(Request $request): \Inertia\Response
 
 SELECT
     `projects`.`group_id`,
-    `projects`.`billing_month`,
+    `project_results`.`billing_month`,
     SUM(
         CASE
             WHEN `project_results`.`billing_amount` IS NOT NULL THEN `project_results`.`billing_amount`
@@ -57,9 +57,9 @@ LEFT JOIN `project_results` ON `project_results`.`project_id` = `projects`.`id`
 LEFT JOIN `bills` ON `bills`.`project_id` = `projects`.`id`
 WHERE
     `projects`.`deleted_at` IS NULL
-    AND `projects`.`billing_month` = '202206'
+    AND `project_results`.`billing_month` = '202206'
     AND `users`.`company_name` LIKE '%tran%'
     AND (`bills`.`type` IN ('subscription_fee', 'point_purchase') OR `project_results`.`billing_amount` IS NOT NULL)
 GROUP BY
     `projects`.`group_id`,
-    `projects`.`billing_month`;
+    `project_results`.`billing_month`;
