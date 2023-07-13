@@ -63,3 +63,28 @@ WHERE
 GROUP BY
     `projects`.`group_id`,
     `project_results`.`billing_month`;
+
+
+
+
+    $paginator->getCollection()->transform(function ($item) {
+            dd($item->id);
+            $item->billing_amount = $item->bills->sum('money_amount');
+            return $item;
+        });
+
+        public function bills()
+        {
+            return $this->hasMany(Bill::class, 'project_id', 'id');
+        }
+
+        public function billAmountPurchase()
+        {
+            return $this->bills()
+                ->whereIn('type', ['point_purchase'])
+                ->sum('money_amount');
+        }
+
+
+
+
