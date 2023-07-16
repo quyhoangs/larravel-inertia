@@ -96,11 +96,7 @@ GROUP BY
             ->where('group_id', $group->id)
             ->first();
 
-        if ($point) {
-            $pointInformation = $point->getPointInformation();
-        } else {
-            $pointInformation = [];
-        }
+$pointInformation = $point ? $point->getPointInformation() : [];
 
         return Inertia::render('Plans/Index')->with([
             'points' => $pointInformation,
